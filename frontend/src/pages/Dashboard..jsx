@@ -7,7 +7,7 @@ import TaskModal from '../components/TaskModal'
 import TaskItem from '../components/TaskItem'
 
 
-const API_BASE = "http://localhost:4000/api/task"
+const API_BASE = "https://personaltaskmanager-6etr.onrender.com/api/task"
 
 const Dashboard= () => {
  
