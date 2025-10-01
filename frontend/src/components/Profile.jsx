@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import{BACK_BUTTON,personalFields,SECTION_WRAPPER,INPUT_WRAPPER,FULL_BUTTON, securityFields, DANGER_BTN} from "../assets/dummy"
 import axios from 'axios'
 
-const API_URL = "https://personaltaskmanager-6etr.onrender.com"
+const API_URL = "http://localhost:4000"
 
 const Profile = ({setCurrentUser, onLogout}) => {
 

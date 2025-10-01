@@ -7,7 +7,7 @@ import TaskModal from '../components/TaskModal'
 import TaskItem from '../components/TaskItem'
 
 
-const API_BASE = "https://personaltaskmanager-6etr.onrender.com/api/task"
+const API_BASE = "http://localhost:4000/api/task"
 
 const Dashboard= () => {
  
@@ -24,40 +24,48 @@ const Dashboard= () => {
     highPriority: tasks.filter(t =>t.priority?.toLowerCase() === "high").length,
     completed: tasks.filter(t => t.completed === true || t.completed === 1 || (
       typeof t.completed === "string" && t.completed.toLowerCase() === "yes"
-    ).length)
+    )).length
   }),[tasks])
 
   //FILTER TASKS
   const filteredTasks = useMemo(() => tasks.filter(task =>{
-    const dueDate = new Date(task.dueDate)
-    const today =  new Date()
-    const nextWeek = new Date(today); nextWeek.setDate(today.getDate()+7)
-    switch (filter){
-          case "today":
-            return dueDate.toDateString() === today.toDateString()
-          case "week":
-             return dueDate >= today && dueDate <= nextWeek
-          case "high":
-          case "medium":
-          case "low":
-            return task.priority?.toLowerCase() === filter
-          default:
-            return true
-    }
-  }),[tasks, filter])
+  const dueDate = task.dueDate ? new Date(task.dueDate) : null
+  const today = new Date()
+  const nextWeek = new Date(today); nextWeek.setDate(today.getDate() + 7)
+
+  switch (filter){
+    case "today":
+      return dueDate && dueDate.toDateString() === today.toDateString()
+    case "week":
+      return dueDate && dueDate >= today && dueDate <= nextWeek
+    case "high":
+    case "medium":
+    case "low":
+      return task.priority?.toLowerCase() === filter
+    default:
+      return true
+  }
+}), [tasks, filter])
 
 
   // SAVING TASKS
-  const handleTaskSave = useCallback(async (taskData) =>{
-    try{
-      if(taskData.id) await axios.put(`${API_BASE}/${taskData.id}/gp`, taskData)
-      refreshTasks()
-      setShowModal(false)
-      setSelectTask(null)
-    }catch(error){
-      console.error("Error saving tasks:",error)
+ const handleTaskSave = useCallback(async (taskData) =>{
+  try{
+    if(taskData.id) {
+      await axios.put(`${API_BASE}/${taskData.id}/gp`, taskData)
+    } else {
+      await axios.post(`${API_BASE}/gp`, taskData)   // <-- Add this for new tasks
     }
-  },[refreshTasks])
+    await refreshTasks()   // make sure it’s awaited
+    setShowModal(false)
+    setSelectTask(null)
+  }catch(error){
+    console.error("Error saving tasks:", error)
+  }
+}, [refreshTasks])
+
+  console.log("Tasks from context:", tasks)
+  console.log("Filtered Tasks after filter:", filteredTasks)
 
   return (
     <div className={WRAPPER}>
@@ -131,17 +139,16 @@ const Dashboard= () => {
               <div className={EMPTY_STATE.wrapper}>
                  <div className={EMPTY_STATE.iconWrapper}>
                    <CalendarIcon className='w-8 h-8 text-purple-500'/>
-                </div>
-                   <h3>
+                  </div>    
+                   <h3 className='text-lg font-semibold text-gray-800 mb-2' >
                      No tasks found
                    </h3>
-
+                   
                    <p className='text-sm text-gray-500 mb-4'>{filter === "all" ?
                    "Create your first task to get started" : "No tasks match this filter"}</p>
                    <button onClick={()=> setShowModal(true)} className={EMPTY_STATE.btn}>
                       Add New Task
-                   </button>
-                
+                   </button>           
               </div> 
             ):(
                 filteredTasks.map(task => (

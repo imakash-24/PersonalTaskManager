@@ -1,10 +1,7 @@
 import mongoose from 'mongoose'
 
-export const connectDB = async () => {
-    await mongoose.connect(process.env.MONGO_URI, { 
-        useNewUrlParser: true, 
-        useUnifiedTopology: true, 
-        tls: true 
-    })
-    .then(() => console.log("DB connected"));
+export const connectDB = async ()=> {
+    await mongoose.connect("mongodb+srv://jaiakash2409:Akashatlas24@cluster0.c1koewq.mongodb.net/Taskflow")
+    .then(()=> console.log("DB connected"));
+    
 }

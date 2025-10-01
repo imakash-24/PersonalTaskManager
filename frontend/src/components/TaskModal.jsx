@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { baseControlClasses, DEFAULT_TASK, priorityStyles } from '../assets/dummy'
 import { AlignLeft, Calendar, CheckCircle, Flag, PlusCircle, Save, X } from 'lucide-react'
 
-const API_BASE = "https://personaltaskmanager-6etr.onrender.com/api/task"
+const API_BASE = "http://localhost:4000/api/task"
 
 const TaskModal = ({isOpen, onClose, taskToEdit, onSave, onLogout}) => {
 
@@ -22,7 +22,7 @@ const TaskModal = ({isOpen, onClose, taskToEdit, onSave, onLogout}) => {
             priority: taskToEdit.priority || "Low",
             dueDate: taskToEdit.dueDate?.split("T")[0] || "",
             completed: normalized,
-            id:taskToEdit._id,
+            id: taskToEdit._id,
         })
     }
     else{
@@ -45,7 +45,7 @@ const TaskModal = ({isOpen, onClose, taskToEdit, onSave, onLogout}) => {
     }
   },[])
 
-  const handleSubmit = useCallback(async(e)=>{
+  const handleSubmit = useCallback(async (e) =>{
     e.preventDefault()
     if(taskData.dueDate < today) {
         setError("Due date cannot be in the past.")
@@ -96,6 +96,7 @@ const TaskModal = ({isOpen, onClose, taskToEdit, onSave, onLogout}) => {
                <X className="w-5 h-5"/>
            </button>
         </div>
+
         {/* FORM TO FILL CREATE A TASK */}
         <form onSubmit={handleSubmit} className='space-y-4'>
             {error && <div className='text-sm text-red-600 bg-red-50 p-3 rounded-lg 
@@ -146,7 +147,7 @@ const TaskModal = ({isOpen, onClose, taskToEdit, onSave, onLogout}) => {
             </div>
 
             <div>
-              <label htmlFor="" className='flex items-center gap- text-sm font-medium text-gray-700 mb-2'>
+              <label  className='flex items-center gap- text-sm font-medium text-gray-700 mb-2'>
                 <CheckCircle className='w-4 h-4 text-purple-500'/>Status
               </label>
 
@@ -154,7 +155,7 @@ const TaskModal = ({isOpen, onClose, taskToEdit, onSave, onLogout}) => {
                 {[{ val: "Yes", label:"Completed" }, {val:"No", label:"In Progress"}].map(({val, label})=>(
                   <label key={val} className='flex items-center'>
                     <input type="radio" name='completed' value={val} checked={taskData.completed === val}
-                    onChange={handleChange} className='h-4 w- text-purple-600
+                    onChange={handleChange} className='h-4 w-4 text-purple-600
                     focus:ring-purple-500 border-gray-300 rounded'/>
                     <span className='ml-2 text-sm text-gray-700 '>{label}</span>
                   </label>

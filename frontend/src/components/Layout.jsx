@@ -18,12 +18,14 @@ const Layout = ({onLogout, user}) => {
   try {
     const token = localStorage.getItem("token")
     if(!token)throw new Error("No auth token found")
-    const {data}=await axios.get("https://personaltaskmanager-6etr.onrender.com/api/task/gp",{
+    const {data}=await axios.get("http://localhost:4000/api/task/gp",{
     headers:{Authorization:`Bearer ${token}`}
   })
 
+   console.log("API Response:", data);
+
     const arr= Array.isArray(data)?data:
-    Array.isArray(data?.tasks)?data.tasks:
+    Array.isArray(data?.task)?data.task:
     Array.isArray(data?.data)?data.data:[]
     setTasks(arr)
   } 
@@ -35,6 +37,8 @@ const Layout = ({onLogout, user}) => {
     setLoading(false)
    }
  },[onLogout])
+
+
 
  useEffect(()=>{
   fetchTasks()
@@ -156,7 +160,7 @@ const Layout = ({onLogout, user}) => {
                  
                  <div className='space-y-2 sm:space-y-3'>
                     {tasks.slice(0,3).map((task)=>(
-                      <div key={task._i || task.idd} className='flex items-center
+                      <div key={task._id || task.id} className='flex items-center
                       justify-between p-2 sm:p-3 hover:bg-purple-50/50 rounded-lg 
                       transition-colors duration-200 border border-transparent hover:border-purple-100'>
                        <div className='flex-1 min-w-0'>

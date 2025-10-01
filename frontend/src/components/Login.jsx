@@ -16,7 +16,7 @@ const Login = ({onSubmit,onSwitchMode}) => {
   const[rememberMe, setRememberMe]= useState(false)
 
   const navigate = useNavigate()
-  const url = "https://personaltaskmanager-6etr.onrender.com"
+  const url = "http://localhost:4000"
 
  //Functions 
 useEffect(()=>{

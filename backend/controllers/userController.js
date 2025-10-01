@@ -3,7 +3,7 @@ import validator from "validator"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-const JWT_SECRET = process.env.JWT_SECRET || "your secret key"
+const JWT_SECRET = process.env.JWT_SECRET || "9a17908d02e1f2580928dc3746ea4c78"
 const TOKEN_EXPIRES = "24h"
 
 const createToken = (userId)=>{

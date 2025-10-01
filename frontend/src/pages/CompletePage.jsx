@@ -10,9 +10,9 @@ const CompletePage = () => {
   const [sortBy, setSortBy] = useState("newest")
   
   const sortedCompletedTasks = useMemo(()=>{
-    return tasks.filter(tasks => [true, 1, yes].includes(
-      typeof tasks.completed === "string" ? task.completed.toLowerCase()
-      : task.completed
+    return tasks.filter(tasks => [true, 1, "yes"].includes(
+      typeof tasks.completed === "string" ? tasks.completed.toLowerCase()
+      : tasks.completed
     ))
     .sort((a,b)=>{
       switch(sortBy) {
