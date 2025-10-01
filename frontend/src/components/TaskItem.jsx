@@ -6,7 +6,7 @@ import {format, isToday} from "date-fns"
 import TaskModal from './TaskModal'
 
 
-const API_BASE = "http://localhost:4000/api/task"
+const API_BASE = "https://personaltaskmanager-backend-9547.onrender.com/api/task"
 
 const TaskItem = ({task, onRefresh, onLogout, showCompleteCheckbox = true}) => {
 

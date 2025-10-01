@@ -4,7 +4,7 @@ import {Inputwrapper, MESSAGE_ERROR, MESSAGE_SUCCESS,FIELDS,BUTTONCLASSES } from
 import axios from "axios"
 
 
-const API_URL = "http://localhost:4000"
+const API_URL = "https://personaltaskmanager-backend-9547.onrender.com"
 const INITIAL_FORM = {name:"",email:"", password:""}
 
 const SignUp = ({onSwitchMode}) => {
